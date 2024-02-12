@@ -4,8 +4,11 @@
 #include<CommCtrl.h>
 #include<thread>
 #include<commctrl.h>
+#include<graphics.h>
 #include<windef.h>
+#include<algorithm>+
 #include<vector>
+#include<math.h>
 #include<random>
 #include <mmsystem.h>
 #pragma comment(lib, "winmm.lib")
@@ -21,6 +24,13 @@
 #ifndef BRIRD_H
 #define BRIRD_H
 #endif
+#define SQU(x) ((x)*(x))
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
+#define MAX(a,b) ((a)>(b)?(a):(b))
+#define CHESS_SIZE 70
+#define INTERVAL 50
+#define ROW 10
+#define COL 9
 #define BORDER 220
 #define ICONSIZE 80
 #define G 2

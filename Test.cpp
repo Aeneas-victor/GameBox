@@ -3,6 +3,7 @@
 bool GameUnderway = false;
 extern void GameSnakeModeBegin();
 extern void GameBrirdModeBegin();
+extern void GameChinaChessModeBegin();
 /// //hinstance 应用程序当前实例窗口
 LRESULT CALLBACK CallbackFunc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -73,9 +74,16 @@ LRESULT CALLBACK CallbackFunc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		else if (LOWORD(wParam) == 3) // 判断按钮ID是否为3
 		{
 			// 执行按钮3的功能
-			MessageBox(GetDesktopWindow(),
-				"贪吃蛇游戏简介:\n开始游戏前记得保存桌面的布局，\n开始游戏后会混乱\n要把桌面的自动将图标和网格对齐和自动排列图标取消\n", 
-				"help", MB_ICONQUESTION | MB_OK);
+			if (!GameUnderway)
+			{
+				std::thread GameChess(GameChinaChessModeBegin);
+				ShowWindow(hwnd, SW_SHOWMINIMIZED);				//隐藏控制台
+				GameChess.detach();
+			}
+			else
+			{
+				MessageBox(GetDesktopWindow(), "游戏进行中,请先结束游戏", "HINT", MB_ICONQUESTION | MB_OK);
+			}
 		}
 		else { NULL; }
 		ReleaseDC(hwnd, hdc); // 释放设备上下文句柄
@@ -116,7 +124,7 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE HpREViNSTANCE, LPSTR lpCMDline
 	CreateWindow("BUTTON", "SnakeGame", WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON, 125, 70, 90, 40, hwnd, (HMENU)1, NULL, NULL);
 	/////////////窗口类名////窗口标题////窗口样式///////////////////////////////左上角横纵坐标//窗口宽高/父窗口句柄///菜单句柄///实例句柄/附加参数
 	CreateWindow("BUTTON", "BrirdGame", WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON, 125, 120, 90, 40, hwnd, (HMENU)2, NULL, NULL);
-	CreateWindow("BUTTON", "Help&&Intro", WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON, 125, 170, 90, 40, hwnd, (HMENU)3, NULL, NULL);
+	CreateWindow("BUTTON", "ChinaChess", WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON, 125, 170, 90, 40, hwnd, (HMENU)3, NULL, NULL);
 	ShowWindow(hwnd, SW_SHOW);
 	UpdateWindow(hwnd);
 	MSG msg = {};  //消息结构体
