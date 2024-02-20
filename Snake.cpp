@@ -5,7 +5,7 @@
 Snake::Snake() :pdesktop(new Game)//Snake类的构造函数使用初始化列表来初始化指针成员变量pDesktop
 {
 	Music(1);
-	pdesktop->Gameinit();
+	pdesktop->Gameinit();//
 	cout << "Gameinit->win" << endl;
 	snake.push_back({ 240,240 });
 	cout << "Snake::Snake():pdesktop(new Game)->initialize complete!" << endl;

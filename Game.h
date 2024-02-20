@@ -10,12 +10,9 @@ public:
 	int GetIconCount();
 	HWND GetDesktopHandle();
 	HWND Getdesktop();
-
-private:
+protected:
 	HWND desktop;
 	int Width;
 	int Height;
 	int iconCount;
-	
-
 };

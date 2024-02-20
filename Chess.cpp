@@ -249,6 +249,7 @@ void Chess::GetControl()
 			//piece clickpiece = isClickOnpiece(chessmsg.x-INTERVAL, chessmsg.y-INTERVAL);//鼠标点击位置显示不受设置原点影响，适应棋盘绘画位置设置
 			////将鼠标点击位置设置为设置原点后的位置。
 			//if(chessmsg.x>=-40&&chessmsg.x<=8*CHESS_SIZE+40&&chessmsg.y>=-40&&chessmsg.y<=9*CHESS_SIZE+40)
+
 			{//点击位置在键盘内
 				subtemp = (chessmsg.x - INTERVAL) / CHESS_SIZE;
 				int  subscriptx = subtemp * CHESS_SIZE + (abs(subtemp * CHESS_SIZE - chessmsg.x + INTERVAL) > abs((subtemp + 1) * CHESS_SIZE - chessmsg.x + INTERVAL) ? CHESS_SIZE : 0);

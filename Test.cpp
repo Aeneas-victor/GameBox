@@ -1,9 +1,13 @@
 ﻿#include<Windows.h>
 #include<thread>
+/// <summary>
+///
+/// </summary>
 bool GameUnderway = false;
 extern void GameSnakeModeBegin();
 extern void GameBrirdModeBegin();
 extern void GameChinaChessModeBegin();
+extern void ClockMode();
 /// //hinstance 应用程序当前实例窗口
 LRESULT CALLBACK CallbackFunc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -85,6 +89,19 @@ LRESULT CALLBACK CallbackFunc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 				MessageBox(GetDesktopWindow(), "游戏进行中,请先结束游戏", "HINT", MB_ICONQUESTION | MB_OK);
 			}
 		}
+		else if (LOWORD(wParam) == 4)
+		{
+			if (!GameUnderway)
+			{
+				std::thread GameChess(ClockMode);
+				ShowWindow(hwnd, SW_SHOWMINIMIZED);				//隐藏控制台
+				GameChess.detach();
+			}
+			else
+			{
+				MessageBox(GetDesktopWindow(), "游戏进行中,请先结束游戏", "HINT", MB_ICONQUESTION | MB_OK);
+			}
+		}
 		else { NULL; }
 		ReleaseDC(hwnd, hdc); // 释放设备上下文句柄
 		break;
@@ -93,7 +110,6 @@ LRESULT CALLBACK CallbackFunc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		PostQuitMessage(0);//传递退出消息，终止主函数的消息循环
 		break;
 		// 默认行为(什么都不做，就返回窗口)
-		// 这个地方，很多萌新都容易漏，导致窗口不显示又退不出循环，注意一下
 	default: return DefWindowProc(hwnd, msg, wParam, lParam);
 	}
 }
@@ -106,7 +122,6 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE HpREViNSTANCE, LPSTR lpCMDline
 	RegisterClass(&wc);
 	//RegisterClass()注册窗口类
 	//接受一个WNDCLASS的指针
-	//必须通过这一步，窗口才能注册成功
 	//CreateWindow 创建窗口，返回一个窗口句柄
 	HWND hwnd = CreateWindow(
 		wc.lpszClassName,                  //窗口类名，要和wc.lpszClassName相同
@@ -125,10 +140,11 @@ int WINAPI WinMain(HINSTANCE hinstance, HINSTANCE HpREViNSTANCE, LPSTR lpCMDline
 	/////////////窗口类名////窗口标题////窗口样式///////////////////////////////左上角横纵坐标//窗口宽高/父窗口句柄///菜单句柄///实例句柄/附加参数
 	CreateWindow("BUTTON", "BrirdGame", WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON, 125, 120, 90, 40, hwnd, (HMENU)2, NULL, NULL);
 	CreateWindow("BUTTON", "ChinaChess", WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON, 125, 170, 90, 40, hwnd, (HMENU)3, NULL, NULL);
+	CreateWindow("BUTTON", "Clock", WS_VISIBLE | WS_CHILD | BS_PUSHBUTTON, 285, 0, 50, 40, hwnd, (HMENU)4, NULL, NULL);
 	ShowWindow(hwnd, SW_SHOW);
 	UpdateWindow(hwnd);
 	MSG msg = {};  //消息结构体
-	while (GetMessage(&msg, 0, NULL, NULL)) // 如果没有发生错误，且收到了任意消息...
+	while (GetMessage(&msg, 0, NULL, NULL)) // 如果没有发生错误，且收到了任意消息
 	{
 		//::TranslateMessage(&msg); // 翻译消息，将消息中的键盘码转换为对应的字符
 		DispatchMessage(&msg);  // 派发消息，调用 CallBackFunc 回调函数处理消息
