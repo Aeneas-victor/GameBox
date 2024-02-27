@@ -14,8 +14,13 @@
 #include<mutex>
 #include<vector>
 #include<math.h>
+#include<map>
 #include<random>
 #include<dos.h> 
+#include<tchar.h>
+#include <shlobj.h>
+#include<KnownFolders.h>
+#include <atlconv.h>
 #include <mmsystem.h>
 #pragma comment(lib, "winmm.lib")
 #ifndef BRIRD_H
@@ -47,6 +52,7 @@
 #define _space_num 5
 #define NUMWIDTH 3
 #define NUMHEIGHT 5
+
 /// Õº±Í”Œœ∑
 /// /////////////////////////////////
 /// </summary>

@@ -123,8 +123,6 @@ void Snake::Music(int a)
 	}
 	if (a == 2)
 	{
-		// 等待音乐播放完成
-		// Sleep(5000); // 等待5秒
 		//// 停止音乐
 		mciSendString("stop myMusic", NULL, 0, NULL);
 		//// 关闭音乐文件

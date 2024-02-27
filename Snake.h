@@ -1,9 +1,11 @@
 #pragma once
+#ifndef SNAKE_H
+#define SNAKE_H
 #include"common.h"
 class Game;
 class Snake {
 public:
-	enum Dir { UP = 0, DOWN, LEFT, RIGHT };
+	enum Dir { UP = 0, DOWN, LEFT, RIGHT };//·½Ïò
 	Snake();
 	~Snake();
 	void MoveSnake();
@@ -25,3 +27,4 @@ private:
 	POINT food;
 	Dir direction;
 };
+#endif

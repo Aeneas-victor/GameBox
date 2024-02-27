@@ -34,7 +34,6 @@ void Chess::Gameinit()
 			_piece[i][j].point.y = i * CHESS_SIZE;
 			_piece[i][j].color = 'N';
 			if (i < 5) {
-
 				if (i == 0) {
 					if (j < 5) {
 						_piece[i][j].ChessName.assign(_black[j]);
@@ -123,7 +122,6 @@ void Chess::Gameinit()
 				_piece[i][j].ifriver = false;//是否过河
 		}
 	}
-
 }
 
 //初始化//无棋子color为  N  
@@ -185,20 +183,21 @@ void Chess::Moveed()
 	std::cout << "move" << std::endl;
 	if (_piece[end.x][end.y].ChessName == "将")
 	{
-		settextstyle(30, 10, "隶书");
+		settextstyle(40, 20, "隶书");
 		std::cout << "红方胜利" << std::endl;
-		outtextxy(2 * CHESS_SIZE + 20, 4 * CHESS_SIZE + 10, "红方胜利");
+		outtextxy(3 * CHESS_SIZE, 4 * CHESS_SIZE + 10, "红方胜利");
+		win = true;
 		GameOverx = true;
 	}
 	else if (_piece[end.x][end.y].ChessName == "帥")
 	{
-		settextstyle(30, 10, "隶书");
+		settextstyle(40, 20, "隶书");
 		std::cout << "黑方胜利" << std::endl;
-		outtextxy(2 * CHESS_SIZE + 20, 4 * CHESS_SIZE + 10, "黑方胜利");
-
+		outtextxy(3 * CHESS_SIZE, 4 * CHESS_SIZE + 10, "黑方胜利");
+		win = false;
 		GameOverx = true;
 	}
-
+	else { GameOverx = false; }
 	_piece[end.x][end.y].ChessName = _piece[begin.x][begin.y].ChessName;
 	RedOrBlack = _piece[begin.x][begin.y].color == 'R' ? 'B' : 'R';
 	_piece[begin.x][begin.y].ChessName = "";
@@ -218,14 +217,16 @@ void Chess::refresh()
 {
 	cleardevice();
 	DrawBoard();
-	settextstyle(30, 10, "隶书");
+	settextstyle(40, 20, "隶书");
+	if(GameOverx)outtextxy(3*CHESS_SIZE, 4 * CHESS_SIZE + 10, win?"红方胜利":"黑方胜利");
+	settextstyle(36, 12, "隶书");
 	if (RedOrBlack == 'R')
 	{
-		outtextxy(10 * CHESS_SIZE - 10, 2 * CHESS_SIZE + 10, "红方走棋");
+		outtextxy(10 * CHESS_SIZE - 20, 2 * CHESS_SIZE + 10, "红方走棋");
 	}
 	else if (RedOrBlack == 'B')
 	{
-		outtextxy(10 * CHESS_SIZE - 10, 2 * CHESS_SIZE + 10, "黑方走棋");
+		outtextxy(10 * CHESS_SIZE - 20, 2 * CHESS_SIZE + 10, "黑方走棋");
 	}
 	for (int i = 0; i < ROW; i++) {
 		for (int j = 0; j < COL; j++) {

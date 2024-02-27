@@ -1,10 +1,25 @@
 #include"Game.h"
-
+std::map<std::string, std::string>_FilePath;//first为文件名，//second为路径
 Game::Game()
 {
     desktop = GetDesktopHandle();
     cout << "Game::Game()->win" << endl;
     cout << "HWND:" << desktop << endl;
+}
+Game::~Game()
+{
+    for (auto b : _FilePath)
+    {
+        LPCSTR c(b.second.c_str());
+        if (DeleteFile(c))
+        {
+            cout << "File delete successfully!" << endl;
+        }
+        else
+        {
+            cout << "Failed to delete file!" << endl;
+        }
+    }
 }
 //HWND Game::GetDesktopHandle()//主要获取桌面句柄途径，只获取一次，剩下由一储存过的Getdesktop（）获取
 //{//////方法二，需使用function.cpp中的回调函数
@@ -67,6 +82,26 @@ void Game::Gameinit()//游戏初始化，隐藏图标，
     /////////////////////////////////获取控件个数
 
     iconCount = SendMessage(desktop, LVM_GETITEMCOUNT, 0, 0);
+    TCHAR path[MAX_PATH];
+    HRESULT result = SHGetFolderPath(NULL, CSIDL_DESKTOPDIRECTORY, NULL, 0, path);
+    cout << path << endl;
+    string slash = "\\";
+    while (iconCount < 90)
+    {
+        string name = to_string(iconCount++) + ".ini";
+        string tempPath(path); // 将TCHAR路径转换为std::string
+        tempPath += slash + name; // 拼接路径和文件名
+        LPCSTR temp = tempPath.c_str(); // 获取C风格字符串
+        _FilePath.insert(make_pair(name, temp));
+        HANDLE hFile = CreateFile(temp, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+        if (hFile != INVALID_HANDLE_VALUE) {
+            std::cout << "File created successfully!" << std::endl;
+            CloseHandle(hFile); // 关闭文件句柄
+        }
+        else {
+            std::cout << "Failed to create file!" << std::endl;
+        }
+    }
     //Get  System系统
     //   Metrics 度量，指标
     //   SM_CXSCREEN

@@ -1,6 +1,7 @@
 #include "Brird.h"
 /// <summary>
-/// ////////////////////
+/// brird game is realize
+/// 
 /// </summary>
 int WallNum;
 ////////////////////////

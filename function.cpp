@@ -56,7 +56,7 @@ void GamePause(bool* GameOvertemp)
         }
     }
 }
-void GameExit(bool& XGameOver)
+void GameExit(bool& XGameOver)//ÍË³öº¯Êý
 {
     if (GetAsyncKeyState(VK_ESCAPE) & 0x8000)
     {
@@ -65,14 +65,14 @@ void GameExit(bool& XGameOver)
         GameUnderway = false;
     }
 }
-void Drawleft(int x, int y)
+void Drawleft(int x, int y)//»­×ó²àµÄ
 {
 	line(x + 4, y - 4, x + 20, y - 4);
 	line(x + 4, y - 4, x + 4, y - 20);
 	line(x + 4, y + 4, x + 20, y + 4);
 	line(x + 4, y + 4, x + 4, y + 20);
 }
-void DrawRight(int x, int y)
+void DrawRight(int x, int y)//right
 {
 	line(x - 4, y + 4, x - 20, y + 4);
 	line(x - 4, y + 4, x - 4, y + 20);
@@ -86,7 +86,7 @@ void DrawPosition(int x, int y)
 	DrawRight(x, y);
 }
 
-void DrawBoard()
+void DrawBoard()//
 {
 
 	setbkcolor(RGB(252, 215, 100));
