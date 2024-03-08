@@ -65,14 +65,14 @@ void GameExit(bool& XGameOver)//退出函数
         GameUnderway = false;
     }
 }
-void Drawleft(int x, int y)//画左侧的
+void Drawleft(int x, int y)
 {
 	line(x + 4, y - 4, x + 20, y - 4);
 	line(x + 4, y - 4, x + 4, y - 20);
 	line(x + 4, y + 4, x + 20, y + 4);
 	line(x + 4, y + 4, x + 4, y + 20);
 }
-void DrawRight(int x, int y)//right
+void DrawRight(int x, int y)
 {
 	line(x - 4, y + 4, x - 20, y + 4);
 	line(x - 4, y + 4, x - 4, y + 20);
@@ -86,7 +86,7 @@ void DrawPosition(int x, int y)
 	DrawRight(x, y);
 }
 
-void DrawBoard()//
+void DrawBoard()
 {
 
 	setbkcolor(RGB(252, 215, 100));
@@ -135,7 +135,7 @@ void DrawBoard()//
 	outtextxy(60, 290, ("楚河"));
 	outtextxy(60 + 5 * CHESS_SIZE, 290, ("汉界"));
 	IMAGE judge;
-	loadimage(&judge, "resource\\judge.jpg", 309, 700, true);
+	loadimage(&judge, (LPCTSTR)"resource\\judge.jpg", 309, 700, true);
 	putimage(610, -50, &judge);
 
 }

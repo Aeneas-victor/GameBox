@@ -1,12 +1,17 @@
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS
+#define _WINSOCK_DEPRECATED_NO_WARNINGS 
 #include<iostream>
-#include<Windows.h>
+//#include<Windows.h>
+#include <WinSock2.h>	
+#include<WS2tcpip.h>
 #include<CommCtrl.h>
 #include<thread>
 #include<commctrl.h>
 #include<graphics.h>
 #include<windef.h>
+#include<string>
+#include<cstring>
 #include<conio.h>
 #include <time.h>
 #include<algorithm>
@@ -25,6 +30,7 @@
 #include"StaticLibDesktop.h"
 #pragma comment(lib, "winmm.lib")
 #pragma comment(lib,"StaticLibDesktop.lib")
+#pragma comment(lib, "ws2_32.lib")
 #ifndef BRIRD_H
 #define BRIRD_H
 #endif

@@ -8,6 +8,7 @@ void GameChinaChessModeBegin()
 	chess->testpoint();
 	chess->testcolor();
 	chess->testaddress();
+	chess->myconnect();
 	BeginBatchDraw();
 	while (!chess->GameOverx)
 	{

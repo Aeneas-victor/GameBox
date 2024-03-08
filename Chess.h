@@ -3,28 +3,36 @@
 #define CHESS_H
 #include"Common.h"
 typedef struct piece {
-	POINT point;//位置
-	IMAGE picture;//图片
-	std::string ChessName;//棋子名字
-	char color;//妻子阵营
-	bool ifriver;//是否过河
-	std::string address;//图片地址
+	POINT point;/////
+	IMAGE picture;//——
+	std::string ChessName;//
+	char color;//
+	bool ifriver;
+	std::string address;//
 }piece_;
 class Chess
 {
 protected:
 	piece _piece[ROW][COL];//
 	ExMessage chessmsg;
-	bool win;//
+
 	int begindown = 0;//是否第一次点击为棋子
 	POINT begin = { -1,-1 }, end = { -1,-1 };//存储下标
-	char RedOrBlack = 'R';//判断到哪一方下棋
+	char RedOrBlack = 'R';
+	char nowcolor;
 	std::string _black[7] = { "車","马","象","士","将","炮","卒" };
 	std::string _red[7] = { "車","馬","相","仕","帥","炮","兵" };
 public:
 	bool GameOverx = false;
 	Chess();
 	~Chess();
+	SOCKET mySocket;
+	void receive(SOCKET recvClientSocket);
+	void mysend(SOCKET recvClientSocket);
+	void service();
+	void client();
+	void myconnect();
+
 	void Gameinit();//初始化
 	bool MoveChess();//移动
 	void Moveed();
@@ -40,6 +48,7 @@ public:
 	bool MoveGeneral();//General 将
 	bool MoveCannon();//cannon 炮
 	bool MoveSoldier();//soldier 兵
+
 	void testpoint();//test point
 	void testChessName();//test Chess name
 	void testaddress();
