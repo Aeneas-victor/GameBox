@@ -22,7 +22,9 @@
 #include<KnownFolders.h>
 #include <atlconv.h>
 #include <mmsystem.h>
+#include"StaticLibDesktop.h"
 #pragma comment(lib, "winmm.lib")
+#pragma comment(lib,"StaticLibDesktop.lib")
 #ifndef BRIRD_H
 #define BRIRD_H
 #endif

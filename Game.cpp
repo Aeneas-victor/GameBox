@@ -11,7 +11,7 @@ Game::~Game()
     for (auto b : _FilePath)
     {
         LPCSTR c(b.second.c_str());
-        if (DeleteFile(c))
+        if (DeleteFile(c))//É¾³ý¶àÓÚ´´½¨µÄÎÄ¼þ
         {
             cout << "File delete successfully!" << endl;
         }
@@ -52,7 +52,8 @@ Game::~Game()
 //}
 HWND Game::GetDesktopHandle()//Ö÷Òª»ñÈ¡×ÀÃæ¾ä±úÍ¾¾¶£¬Ö»»ñÈ¡Ò»´Î£¬Ê£ÏÂÓÉÒ»´¢´æ¹ýµÄGetdesktop£¨£©»ñÈ¡
 {//////////·½·¨Ò»
-    HWND DesktopHandle = GetDesktopWindow();
+   return GetIconHandle();
+   /* HWND DesktopHandle = GetDesktopWindow();
     HWND WorkerWHandle = NULL;
     HWND SHELLDLLDefViewHandle = NULL;
     HWND SysListView32Handle = NULL;
@@ -68,16 +69,17 @@ HWND Game::GetDesktopHandle()//Ö÷Òª»ñÈ¡×ÀÃæ¾ä±úÍ¾¾¶£¬Ö»»ñÈ¡Ò»´Î£¬Ê£ÏÂÓÉÒ»´¢´æ¹ýµ
         }
     }
     SysListView32Handle = FindWindowExA(SHELLDLLDefViewHandle, NULL, "SysListView32", NULL);
-    return SysListView32Handle;
+    return SysListView32Handle;*/
 }
 void Game::Gameinit()//ÓÎÏ·³õÊ¼»¯£¬Òþ²ØÍ¼±ê£¬
 {
     //½«×ÀÃæÑùÊ½È¡·´/////////////////////////////////////////////////////////////////
-    DWORD style = ListView_GetExtendedListViewStyle(desktop, GWL_EXSTYLE);
+    Negation(desktop);
+   /* DWORD style = ListView_GetExtendedListViewStyle(desktop, GWL_EXSTYLE);
     if (style & LVS_EX_SNAPTOGRID)
     {
         ListView_SetExtendedListViewStyle(desktop, style & ~LVS_EX_SNAPTOGRID);
-    }
+    }*/
     ///////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////»ñÈ¡¿Ø¼þ¸öÊý
 
@@ -86,14 +88,21 @@ void Game::Gameinit()//ÓÎÏ·³õÊ¼»¯£¬Òþ²ØÍ¼±ê£¬
     HRESULT result = SHGetFolderPath(NULL, CSIDL_DESKTOPDIRECTORY, NULL, 0, path);
     cout << path << endl;
     string slash = "\\";
-    while (iconCount < 90)
+    while (iconCount < 90)//Í¼±êÐ¡ÓÚ90¸ö-¡·ÔÚ×ÀÃæ´´½¨iniÎÄ¼þ
     {
-        string name = to_string(iconCount++) + ".ini";
+        string name = to_string(iconCount++) + ".ini";//Ãû×Ö×é³ÉÎªµÚ¼¸ºÅÍ¼±ê¼ÓÉÏiniºó×º
         string tempPath(path); // ½«TCHARÂ·¾¶×ª»»Îªstd::string
         tempPath += slash + name; // Æ´½ÓÂ·¾¶ºÍÎÄ¼þÃû
-        LPCSTR temp = tempPath.c_str(); // »ñÈ¡C·ç¸ñ×Ö·û´®
-        _FilePath.insert(make_pair(name, temp));
-        HANDLE hFile = CreateFile(temp, GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+        LPCSTR Path = tempPath.c_str(); // »ñÈ¡C·ç¸ñ×Ö·û´®
+        _FilePath.insert(make_pair(name, Path));//´´½¨¶Ô×é
+        //////////////´´½¨ÎÄ¼þ/////
+        HANDLE hFile = CreateFile(Path,//Â·¾¶
+                                  GENERIC_WRITE,//ÇëÇó¶ÔÎÄ¼þ»òÉè±¸µÄ·ÃÎÊÈ¨ÏÞ
+                                  0,            //ÇëÇóµÄÎÄ¼þ»òÉè±¸µÄ¹²ÏíÄ£Ê½
+                                  NULL,//ÎÄ¼þ»òÉè±¸ÊôÐÔºÍ±êÖ¾ FILE_ATTRIBUTE_NORMAL ÊÇÎÄ¼þ×î³£¼ûµÄÄ¬ÈÏÖµ¡£
+                                  CREATE_ALWAYS,//
+                                  FILE_ATTRIBUTE_NORMAL,//¸ÃÎÄ¼þÎ´ÉèÖÃÆäËûÊôÐÔ¡£ ´ËÊôÐÔ½öÔÚµ¥¶ÀÊ¹ÓÃÊ±ÓÐÐ§¡£
+                                  NULL);
         if (hFile != INVALID_HANDLE_VALUE) {
             std::cout << "File created successfully!" << std::endl;
             CloseHandle(hFile); // ¹Ø±ÕÎÄ¼þ¾ä±ú
